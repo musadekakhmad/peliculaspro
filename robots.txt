@@ -1,4 +1,5 @@
 User-agent: *
 Allow: /
 
-Sitemap: https://www.google.com/search?q=https://cinemaximo.netlify.app/sitemap.xml
+
+Sitemap: https://www.google.com/search?q=https://peliculaspro.netlify.app/sitemap.xml
