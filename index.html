@@ -1,0 +1,1269 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Peliculas Pro - Your Ultimate Destination for Free HD Movie Streaming</title>
+    <link rel="icon" href="data:image/svg+xml,<svg xmlns=%22http://www.w3.org/2000/svg%22 viewBox=%220 0 100 100%22><text y=%22.9em%22 font-size=%2290%22>🎬</text></svg>">
+    <!-- Pemuatan Tailwind CSS secara asinkron untuk mempercepat FCP -->
+    <script src="https://cdn.tailwindcss.com" defer></script>
+    <style>
+        @import url('https://fonts.googleapis.com/css2?family=Inter:wght@400;600;700;800&display=swap');
+        body {
+            font-family: 'Inter', sans-serif;
+        }
+        /* Custom CSS for rainbow text in the header */
+        .rainbow-text-header {
+            background-image: linear-gradient(to right, violet, indigo, blue, green, yellow, orange, red);
+            -webkit-background-clip: text;
+            background-clip: text;
+            color: transparent;
+            font-weight: 800;
+        }
+        /* CSS for making the header sticky */
+        .sticky-header {
+            position: sticky;
+            top: 0;
+            z-index: 50; /* Ensure the header stays on top of other content when scrolling */
+        }
+        /* Custom spinner for loading states */
+        .loading-spinner {
+            border: 4px solid rgba(255, 255, 255, 0.3);
+            border-top: 4px solid #3B82F6; /* Blue color */
+            border-radius: 50%;
+            width: 50px;
+            height: 50px;
+            animation: spin 1s linear infinite;
+        }
+        @keyframes spin {
+            0% { transform: rotate(0deg); }
+            100% { transform: rotate(360deg); }
+        }
+        /* Custom scrollbar for better aesthetics */
+        ::-webkit-scrollbar {
+            width: 8px;
+        }
+        ::-webkit-scrollbar-track {
+            background: #2d3748; /* bg-gray-800 */
+        }
+        ::-webkit-scrollbar-thumb {
+            background: #4a5568; /* bg-gray-600 */
+            border-radius: 4px;
+        }
+        ::-webkit-scrollbar-thumb:hover {
+            background: #6b7280; /* bg-gray-500 */
+        }
+        /* Styling for error messages */
+        .error-message {
+            background-color: #ef4444; /* red-500 */
+            color: white;
+            padding: 1rem;
+            border-radius: 0.5rem;
+            text-align: center;
+            margin-top: 1rem;
+        }
+
+        /* Skeleton Loader styles */
+        .skeleton-box {
+            background-color: #4a5568; /* bg-gray-700 */
+            border-radius: 0.25rem; /* rounded-md */
+            animation: pulse 2s cubic-bezier(0.4, 0, 0.6, 1) infinite;
+        }
+
+        /* Progress Bar styles */
+        .progress-bar-container {
+            position: relative;
+            height: 4px; /* Tinggi progress bar */
+            background-color: rgba(0, 0, 0, 0.2); /* Latar belakang transparan */
+            border-radius: 9999px; /* rounded-full */
+            margin-top: 0.5rem; /* Spasi dari teks tombol */
+            overflow: hidden; /* Pastikan progress bar tidak keluar dari container */
+        }
+        .progress-bar {
+            height: 100%;
+            background-color: #3B82F6; /* blue-600 */
+            width: 0%;
+            transition: width 0.3s ease-in-out;
+            border-radius: 9999px; /* rounded-full */
+        }
+    </style>
+
+    <meta name="description" content="Selamat datang di Peliculas Pro, tujuan utama Anda untuk streaming film HD gratis. Tonton ribuan film, dari rilis terbaru hingga klasik abadi, tanpa perlu berlangganan. Sumber hiburan tanpa batas Anda.">
+    <meta name="keywords" content="Peliculas Pro, film gratis, tonton film online, streaming HD, film terbaru, film populer, tanpa langganan, hiburan gratis, bioskop online, situs streaming film">
+    <link rel="canonical" href="https://peliculaspro.netlify.app/">
+
+    <meta property="og:title" content="Peliculas Pro - Free HD Movie Streaming">
+    <meta property="og:description" content="Platform streaming film gratis terbaik. Tonton ribuan film HD secara gratis.">
+    <meta property="og:image" content="https://live.staticflickr.com/65535/54701092114_e773f5e59c_b.jpg">
+    <meta property="og:url" content="https://peliculaspro.netlify.app/">
+    <meta property="og:type" content="website">
+    <meta property="fb:app_id" content="100074345305108">
+    <meta property="twitter:card" content="summary_large_image">
+    <meta property="twitter:site" content="@ErwizalA84074">
+    <meta property="twitter:title" content="Peliculas Pro - Free HD Movie Streaming">
+    <meta property="twitter:description" content="Platform streaming film gratis terbaik. Tonton ribuan film HD secara gratis.">
+
+</head>
+<body class="bg-gray-900 text-gray-200">
+    <header class="bg-gray-800 shadow-md sticky-header">
+        <div class="container mx-auto px-4 max-w-7xl">
+            <nav class="p-4 flex flex-col md:flex-row justify-between items-center">
+                <a href="#" id="home-link" class="flex items-center mb-4 md:mb-0">
+                    <svg xmlns="http://www.w3.org/2000/svg" class="h-8 w-8 text-yellow-400 mr-3" viewBox="0 0 24 24" fill="currentColor">
+                        <path d="M18 3H6c-1.1 0-2 .9-2 2v14c0 1.1.9 2 2 2h12c1.1 0 2-.9 2-2V5c0-1.1-.9-2-2-2zM6 5h12v14H6V5zm10 12h-2v-2h2v2zM8 7h2v2H8V7zm0 4h2v2H8v-2zm0 4h2v2H8v-2zm4-4h2v2h-2v-2zm0 4h2v2h-2v-2zm4-4h2v2h-2v-2z"/>
+                    </svg>
+                    <span class="rainbow-text-header text-3xl md:text-4xl">Peliculas Pro</span>
+                </a>
+                <div class="flex items-center space-x-4">
+                    <a href="/" class="text-white hover:text-red-500 hover:font-bold transition-colors duration-300">Home</a>
+                    <div class="relative group">
+                        <button id="movies-dropdown-button" class="text-white hover:text-blue-500 hover:font-bold transition-colors duration-300 flex items-center" aria-haspopup="true" aria-expanded="false">
+                            Movies
+                            <svg class="h-4 w-4 ml-1" xmlns="http://www.w3.org/2000/svg" fill="none" viewBox="0 0 24 24" stroke="currentColor">
+                                <path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M19 9l-7 7-7-7" />
+                            </svg>
+                        </button>
+                        <div id="movies-dropdown-menu" role="menu" class="absolute opacity-0 invisible group-hover:opacity-100 group-hover:visible transition-all duration-300 bg-gray-700 text-white rounded-lg shadow-lg mt-2 py-2 z-10 w-48">
+                            <button role="menuitem" class="block w-full text-left px-4 py-2 hover:bg-gray-600" data-category="popular" data-type="movie">Popular</button>
+                            <button role="menuitem" class="block w-full text-left px-4 py-2 hover:bg-gray-600" data-category="now_playing" data-type="movie">Now Playing</button>
+                            <button role="menuitem" class="block w-full text-left px-4 py-2 hover:bg-gray-600" data-category="upcoming" data-type="movie">Upcoming</button>
+                            <button role="menuitem" class="block w-full text-left px-4 py-2 hover:bg-gray-600" data-category="top_rated" data-type="movie">Top Rated</button>
+                        </div>
+                    </div>
+                    <div class="relative group">
+                        <button id="tv-shows-dropdown-button" class="text-white hover:text-yellow-400 transition-colors duration-300 flex items-center" aria-haspopup="true" aria-expanded="false">
+                            Tv Shows
+                            <svg class="h-4 w-4 ml-1" xmlns="http://www.w3.org/2000/svg" fill="none" viewBox="0 0 24 24" stroke="currentColor">
+                                <path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M19 9l-7 7-7-7" />
+                            </svg>
+                        </button>
+                        <div id="tv-shows-dropdown-menu" role="menu" class="absolute opacity-0 invisible group-hover:opacity-100 group-hover:visible transition-all duration-300 bg-gray-700 text-white rounded-lg shadow-lg mt-2 py-2 z-10 w-48">
+                            <button role="menuitem" class="block w-full text-left px-4 py-2 hover:bg-gray-600" data-category="popular" data-type="tv">Popular</button>
+                            <button role="menuitem" class="block w-full text-left px-4 py-2 hover:bg-gray-600" data-category="airing_today" data-type="tv">Airing Today</button>
+                            <button role="menuitem" class="block w-full text-left px-4 py-2 hover:bg-gray-600" data-category="on_the_air" data-type="tv">On TV</button>
+                            <button role="menuitem" class="block w-full text-left px-4 py-2 hover:bg-gray-600" data-category="top_rated" data-type="tv">Top Rated</button>
+                        </div>
+                    </div>
+                    <form id="search-form" class="flex items-center">
+                        <input type="text" id="search-input" placeholder="Search movies or TV shows..." class="px-3 py-1 text-sm rounded-l-full bg-gray-700 text-white placeholder-gray-400 focus:outline-none focus:ring-2 focus:ring-blue-500 w-40 md:w-auto">
+                        <button type="submit" class="bg-blue-600 hover:bg-blue-700 text-white p-2 rounded-r-full shadow-lg transition-colors duration-300" aria-label="Search">
+                            <svg xmlns="http://www.w3.org/2000/svg" class="h-5 w-5" fill="none" viewBox="0 0 24 24" stroke="currentColor">
+                                <path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M21 21l-6-6m2-5a7 7 0 11-14 0 7 7 0 0114 0z" />
+                            </svg>
+                        </button>
+                    </form>
+                </div>
+            </nav>
+        </div>
+    </header>
+
+    <main id="main-content" class="container mx-auto px-4 py-8 max-w-7xl">
+        <div id="hero-section" class="mb-8 rounded-lg overflow-hidden shadow-lg">
+            <figure>
+                <!-- START: Updated image source to use local WebP/PNG files and updated placeholder colors -->
+                <picture>
+                    <source srcset="/images/cine maximo.webp" type="image/webp">
+                    <img
+                        src="/images/cine maximo.png"
+                        alt="Peliculas Pro Movie Streaming Banner"
+                        srcset="
+                            /images/cine maximo.png 1024w,
+                            https://placehold.co/500x281/e0e0e0/4a4a4a?text=Peliculas+Pro+500w 500w,
+                            https://placehold.co/240x135/e0e0e0/4a4a4a?text=Peliculas+Pro+240w 240w
+                        "
+                        sizes="(max-width: 600px) 100vw, 1024px"
+                        loading="lazy"
+                        class="w-full h-auto object-cover mx-auto block"
+                    >
+                </picture>
+                <!-- END: Updated image source -->
+                <!-- Optional: <figcaption class="text-center text-sm text-gray-500 mt-2">Gambar promosi Peliculas Pro</figcaption> -->
+            </figure>
+        </div>
+
+        <h1 id="main-heading" class="text-3xl md:text-4xl font-extrabold text-white mb-6 leading-tight flex items-center">
+            <svg xmlns="http://www.w3.org/2000/svg" class="h-10 w-10 text-yellow-400 mr-4 flex-shrink-0" viewBox="0 0 24 24" fill="currentColor">
+                <path d="M18 3H6c-1.1 0-2 .9-2 2v14c0 1.1.9 2 2 2h12c1.1 0 2-.9 2-2V5c0-1.1-.9-2-2-2zM6 5h12v14H6V5zm10 12h-2v-2h2v2zM8 7h2v2H8V7zm0 4h2v2H8v-2zm0 4h2v2H8v-2zm4-4h2v2h-2v-2zm0 4h2v2h-2v-2zm4-4h2v2h-2v-2z"/>
+            </svg>
+            Selamat datang di Peliculas Pro: Tujuan Utama Anda untuk Streaming Film HD Gratis Terbaik
+        </h1>
+
+        <p id="intro-section" class="text-lg mb-8 text-gray-300 text-justify">
+            Selamat datang di Peliculas Pro, sebuah platform revolusioner yang dirancang khusus untuk pecinta sinema yang mencari pengalaman menonton film berkualitas tinggi tanpa biaya. Di era digital saat ini, di mana hiburan adalah bagian tak terpisahkan dari kehidupan sehari-hari, Peliculas Pro berfungsi sebagai solusi canggih untuk memenuhi kebutuhan Anda. Kami memahami betapa berharganya waktu luang Anda, dan kami berkomitmen untuk menyediakan akses tak terbatas ke ribuan film dari berbagai genre, mulai dari film laris Hollywood terbaru hingga klasik abadi. Dengan koleksi yang terus diperbarui dan antarmuka yang ramah pengguna, Peliculas Pro bukan hanya situs streaming tetapi komunitas bagi mereka yang bersemangat tentang seni ketujuh.
+        </p>
+        
+        <div id="content-area"></div>
+        <!-- Element to display error messages -->
+        <div id="error-message-container" class="hidden error-message" aria-live="polite"></div>
+    </main>
+
+    <div id="streaming-page-view" class="hidden w-full min-h-screen bg-gray-900 absolute top-0 left-0 z-40 overflow-y-auto p-4 pt-20">
+        <div class="container mx-auto px-4 py-8 max-w-7xl">
+            <button id="streaming-back-button" class="bg-gray-700 hover:bg-gray-600 text-white font-bold py-2 px-4 rounded-full transition-colors duration-300 mb-6 flex items-center">
+                <svg xmlns="http://www.w3.org/2000/svg" class="h-5 w-5 mr-2" fill="none" viewBox="0 0 24 24" stroke="currentColor">
+                    <path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M10 19l-7-7m0 0l7-7m-7 7h18" />
+                </svg>
+                Back to Details
+            </button>
+
+            <h3 id="streaming-page-title" class="text-xl md:text-2xl font-bold text-white mb-4 text-center"></h3>
+            <!-- Modified: Added border and background to the streaming player container -->
+            <div class="relative w-full h-0 pb-[56.25%] rounded-lg overflow-hidden mb-4 border-2 border-gray-700 bg-gray-800 flex items-center justify-center">
+                <iframe id="streaming-player-inline" class="absolute top-0 left-0 w-full h-full" src="" frameborder="0" allow="accelerometer; autoplay; clipboard-write; encrypted-media; gyroscope; picture-in-picture" allowfullscreen></iframe>
+                <!-- Optional: Add a placeholder text/spinner if iframe is empty -->
+                <div id="player-placeholder" class="absolute inset-0 flex items-center justify-center text-gray-400 text-lg">
+                    Loading player...
+                </div>
+            </div>
+            <div class="flex justify-center space-x-4 mb-4">
+                <button id="stream-1-inline-button" class="bg-blue-600 hover:bg-blue-700 text-white font-bold py-2 px-6 rounded-full transition-colors duration-300 shadow-lg">Stream 1</button>
+                <button id="stream-2-inline-button" class="bg-red-600 hover:bg-red-700 text-white font-bold py-2 px-6 rounded-full transition-colors duration-300 shadow-lg">Stream 2</button>
+            </div>
+            <div class="mt-4 text-center text-sm text-gray-400 space-y-2">
+                <p>Please wait for the player to display the film (maximum 1 minute).</p>
+                <p>Film availability depends on the third party.</p>
+                <p>Enjoy the show! Share this web link if you like it!</p>
+            </div>
+
+            <div class="mt-[0.7cm] text-center">
+                <h4 class="text-lg font-bold text-white mb-4">Some people like this</h4>
+                <div id="inline-similar-container" class="grid grid-cols-2 sm:grid-cols-3 md:grid-cols-4 lg:grid-cols-6 gap-4">
+                    </div>
+            </div>
+        </div>
+    </div>
+
+
+    <footer class="bg-gray-800 text-center text-gray-400 p-4 mt-12">
+        <p>© 2024 Peliculas Pro. All rights reserved.</p>
+    </footer>
+
+    <script src="config.js"></script>
+
+    <script>
+        document.addEventListener('DOMContentLoaded', () => {
+            // #############################################
+            // API KEY CONFIGURATION (UPDATED)
+            // #############################################
+            // A list of available API keys/proxies. The application will try the first one,
+            // and if it fails, it will fall back to the next one.
+            const apiKeys = [
+                'tmdb-api-proxy.argoyuwono119.workers.dev',
+                'tmdb-api-proxy.musadekakhmad.workers.dev',
+                'tmdb-api-proxy-1.musadekakhmad.workers.dev'
+            ];
+            
+            // #############################################
+            // ADSTERRA INTEGRATION (NEW)
+            // #############################################
+            let clickCounter = 0; // Global click counter
+
+            const openAdsterraLink = () => {
+                // Sekarang variabel ini dimuat dari file config.js
+                if (window.ADSTERRA_DIRECT_LINKS && window.ADSTERRA_DIRECT_LINKS.length > 0) {
+                    const randomIndex = Math.floor(Math.random() * window.ADSTERRA_DIRECT_LINKS.length);
+                    const adLink = window.ADSTERRA_DIRECT_LINKS[randomIndex];
+                    window.open(adLink, '_blank');
+                    console.log('Adsterra link opened:', adLink); // For debugging
+                } else {
+                    console.warn('ADSTERRA_DIRECT_LINKS is not defined or empty.');
+                }
+            };
+
+            // Event listener for all clicks on the body
+            document.body.addEventListener('click', (event) => { // Menggunakan event parameter
+                // Delegasi event untuk tombol dropdown
+                if (event.target.closest('#movies-dropdown-button') || event.target.closest('#tv-shows-dropdown-button')) {
+                    // Biarkan event listener spesifik dropdown yang menanganinya
+                    return;
+                }
+
+                clickCounter++;
+                // Trigger on 2nd click, then every 5 clicks (2nd, 7th, 12th, 17th, etc.)
+                if (clickCounter === 2 || (clickCounter > 2 && (clickCounter - 2) % 5 === 0)) { // Changed % 7 to % 5
+                    openAdsterraLink();
+                }
+            });
+
+
+            // #############################################
+            // CENTRALIZED STATE MANAGEMENT
+            // #############################################
+
+            const contentArea = document.getElementById('content-area');
+            const heroSection = document.getElementById('hero-section');
+            const introSection = document.getElementById('intro-section');
+            const mainHeading = document.getElementById('main-heading');
+            const searchForm = document.getElementById('search-form');
+            const searchInput = document.getElementById('search-input');
+            const homeLink = document.getElementById('home-link');
+            const errorMessageContainer = document.getElementById('error-message-container'); // New error message element
+            
+            // New elements for the dedicated streaming view
+            const streamingPageView = document.getElementById('streaming-page-view');
+            const streamingPageTitle = document.getElementById('streaming-page-title');
+            const streamingPlayerInline = document.getElementById('streaming-player-inline');
+            const stream1InlineButton = document.getElementById('stream-1-inline-button');
+            const stream2InlineButton = document.getElementById('stream-2-inline-button');
+            const inlineSimilarContainer = document.getElementById('inline-similar-container');
+            const streamingBackButton = document.getElementById('streaming-back-button');
+            const playerPlaceholder = document.getElementById('player-placeholder'); // Get the new placeholder element
+
+            // Dropdown menu elements
+            const moviesDropdownButton = document.getElementById('movies-dropdown-button');
+            const moviesDropdownMenu = document.getElementById('movies-dropdown-menu');
+            const tvShowsDropdownButton = document.getElementById('tv-shows-dropdown-button');
+            const tvShowsDropdownMenu = document.getElementById('tv-shows-dropdown-menu');
+
+
+            const state = {
+                currentPage: 1,
+                renderedItemIds: new Set(),
+                currentView: 'home', // 'home', 'list', 'details', 'search', 'streaming'
+                listParams: null, // { fetchType, type, id, title }
+                detailsParams: null, // { type, id, title }
+                searchQuery: null,
+                currentTrailerKey: null,
+                currentMediaId: null, // Menyimpan ID media saat ini
+                currentMediaType: null, // Menyimpan tipe media saat ini
+                currentMediaTitle: null // Menyimpan judul media saat ini
+            };
+
+            const updateState = (newState) => {
+                Object.assign(state, newState);
+                render();
+            };
+
+            // Function to display user-friendly error messages
+            const displayErrorMessage = (message) => {
+                errorMessageContainer.textContent = message;
+                errorMessageContainer.classList.remove('hidden');
+            };
+
+            // Function to hide error messages
+            const hideErrorMessage = () => {
+                errorMessageContainer.classList.add('hidden');
+                errorMessageContainer.textContent = '';
+            };
+
+            const render = () => {
+                // Sembunyikan tampilan halaman streaming terlebih dahulu
+                streamingPageView.classList.add('hidden');
+                document.getElementById('main-content').classList.remove('hidden'); // Pastikan main content selalu terlihat
+                hideErrorMessage(); // Hide any previous error messages
+
+                // Sembunyikan elemen-elemen utama di dalam main-content secara default
+                heroSection.classList.add('hidden');
+                introSection.classList.add('hidden');
+                mainHeading.classList.add('hidden');
+                contentArea.innerHTML = ''; // Clear contentArea at the start of render for safety
+                state.renderedItemIds.clear();
+
+                // Scroll to top on view change
+                window.scrollTo({ top: 0, behavior: 'smooth' });
+
+                switch (state.currentView) {
+                    case 'home':
+                        heroSection.classList.remove('hidden');
+                        introSection.classList.remove('hidden');
+                        mainHeading.classList.remove('hidden');
+                        mainHeading.innerHTML = `
+                            <svg xmlns="http://www.w3.org/2000/svg" class="h-10 w-10 text-yellow-400 mr-4 flex-shrink-0" viewBox="0 0 24 24" fill="currentColor">
+                                <path d="M18 3H6c-1.1 0-2 .9-2 2v14c0 1.1.9 2 2 2h12c1.1 0 2-.9 2-2V5c0-1.1-.9-2-2-2zM6 5h12v14H6V5zm10 12h-2v-2h2v2zM8 7h2v2H8V7zm0 4h2v2H8v-2zm0 4h2v2H8v-2zm4-4h2v2h-2v-2zm0 4h2v2h-2v-2zm4-4h2v2h-2v-2z"/>
+                            </svg>
+                            Selamat datang di Peliculas Pro: Tujuan Utama Anda untuk Streaming Film HD Gratis Terbaik
+                        `;
+                        // contentArea will be empty for home, as dynamic content is not loaded initially
+                        break;
+                    case 'list':
+                        mainHeading.classList.remove('hidden'); // Ensure main heading is visible for lists
+                        showDynamicContent(state.listParams.fetchType, state.listParams.type, state.listParams.id, state.listParams.title);
+                        break;
+                    case 'details':
+                        // mainHeading is intentionally hidden for details view to give more space for movie info
+                        showDetails(state.detailsParams.type, state.detailsParams.id, state.detailsParams.title);
+                        break;
+                    case 'search':
+                        mainHeading.classList.remove('hidden'); // Ensure main heading is visible for search
+                        showSearchResults(state.searchQuery);
+                        break;
+                    case 'streaming':
+                        document.getElementById('main-content').classList.add('hidden'); // Sembunyikan main content ketika streaming
+                        streamingPageView.classList.remove('hidden');
+                        streamingPageTitle.textContent = `Streaming: ${state.currentMediaTitle}`; // Gunakan state.currentMediaTitle
+
+                        // Setel sumber iframe segera setelah masuk ke tampilan streaming
+                        if (state.currentMediaId) {
+                            streamingPlayerInline.src = `https://vidsrc.me/embed/${state.currentMediaId}`;
+                            playerPlaceholder.classList.remove('hidden'); // Pastikan placeholder terlihat
+                        } else {
+                            // Handle case where currentMediaId might be missing (shouldn't happen if flow is correct)
+                            playerPlaceholder.textContent = 'Tidak dapat memuat video. ID media tidak ditemukan.';
+                            playerPlaceholder.classList.remove('hidden');
+                        }
+                        // Konten untuk streamingPageView diisi saat tombol 'Stream Now' diklik
+                        break;
+                }
+            };
+            
+            // #############################################
+            // UTILITY FUNCTIONS & API CALLS
+            // #############################################
+            // Fungsi untuk membuat "slug" dari string (mengganti spasi dengan tanda hubung)
+            const slugify = (text) => {
+                return encodeURIComponent(text.toLowerCase()
+                    .replace(/\s+/g, '-')           // Ganti spasi dengan tanda hubung
+                    .replace(/[^\w-]+/g, '')       // Hapus semua karakter non-kata kecuali tanda hubung
+                    .replace(/--+/g, '-')          // Ganti beberapa tanda hubung dengan satu tanda hubung
+                    .replace(/^-+/, '')            // Hapus tanda hubung dari awal teks
+                    .replace(/-+$/, ''));          // Hapus tanda hubung dari akhir teks
+            };
+
+            // Function to perform a fetch with fallback and exponential backoff if an API key fails
+            const safeFetch = async (urlSuffix, options = {}, retries = 3, delay = 1000) => {
+                for (let i = 0; i < apiKeys.length; i++) {
+                    const apiKey = apiKeys[i];
+                    const url = `https://${apiKey}${urlSuffix}`;
+                    for (let j = 0; j < retries; j++) {
+                        try {
+                            const response = await fetch(url, options);
+                            if (response.ok) {
+                                return response.json();
+                            } else if (response.status === 429 || response.status >= 500) {
+                                // Too Many Requests or Server Error, retry with backoff
+                                console.warn(`API key ${apiKey} failed with status ${response.status}. Retrying in ${delay}ms...`);
+                                await new Promise(res => setTimeout(res, delay));
+                                delay *= 2; // Exponential backoff
+                            } else {
+                                // Other client-side errors, don't retry with current API key
+                                console.error(`API key ${apiKey} failed with status ${response.status}: ${response.statusText}`);
+                                throw new Error(`API Error: ${response.status} - ${response.statusText}`); // Throw error to be caught by outer try/catch
+                            }
+                        } catch (error) {
+                            console.warn(`Failed to fetch from ${apiKey}. Retrying in ${delay}ms...`, error);
+                            if (j === retries - 1) { // If last retry for this API key fails
+                                // Kita bisa membedakan antara masalah jaringan dan masalah API
+                                if (error.message.includes('Network Error') || error.message.includes('Failed to fetch')) {
+                                    throw new Error('Network Error: Tidak dapat terhubung ke server. Periksa koneksi internet Anda.');
+                                } else {
+                                    throw new Error('Service Unavailable: Maaf, layanan streaming saat ini tidak tersedia. Silakan coba lagi nanti.');
+                                }
+                            }
+                            await new Promise(res => setTimeout(res, delay));
+                            delay *= 2; // Exponential backoff
+                        }
+                    }
+                }
+                throw new Error('All API keys failed to fetch data after multiple retries.');
+            };
+
+            const fetchContent = async (type, category, page = 1) => {
+                const urlSuffix = `/${type}/${category}?page=${page}`;
+                try {
+                    const data = await safeFetch(urlSuffix);
+                    return data.results;
+                } catch (error) {
+                    console.error('Error fetching data:', error);
+                    displayErrorMessage(error.message); // Menampilkan pesan error yang lebih spesifik
+                    return [];
+                }
+            };
+            
+            const fetchByGenre = async (type, genreId, page = 1) => {
+                const urlSuffix = `/discover/${type}?with_genres=${genreId}&page=${page}`;
+                try {
+                    const data = await safeFetch(urlSuffix);
+                    return data.results;
+                } catch (error) {
+                    console.error('Error fetching data by genre:', error);
+                    displayErrorMessage(error.message); // Menampilkan pesan error yang lebih spesifik
+                    return [];
+                }
+            };
+
+            const fetchSearchResults = async (query) => {
+                const urlSuffix = `/search/multi?query=${encodeURIComponent(query)}`; // Query API tetap menggunakan encodeURIComponent
+                try {
+                    const data = await safeFetch(urlSuffix);
+                    return data.results;
+                } catch (error) {
+                    console.error('Error fetching search results:', error);
+                    displayErrorMessage(error.message); // Menampilkan pesan error yang lebih spesifik
+                    return [];
+                }
+            };
+
+            // Menggunakan DocumentFragment untuk renderCards
+            const renderCards = (items, container, limit = null) => {
+                const itemsToRender = limit ? items.slice(0, limit) : items;
+                const fragment = document.createDocumentFragment(); // Buat fragment
+
+                itemsToRender.forEach(item => {
+                    const mediaType = item.media_type || (item.title ? 'movie' : 'tv');
+
+                    if (state.renderedItemIds.has(item.id) || (mediaType !== 'movie' && mediaType !== 'tv')) {
+                        return;
+                    }
+                    state.renderedItemIds.add(item.id);
+
+                    const title = item.title || item.name;
+                    const posterPath = item.poster_path;
+                    // Tentukan URL poster untuk berbagai ukuran
+                    const posterUrlBase = posterPath ? `https://image.tmdb.org/t/p/` : 'https://placehold.co/';
+                    const posterSizes = {
+                        w200: posterPath ? `${posterUrlBase}w200/${posterPath}` : 'https://placehold.co/200x300/e0e0e0/4a4a4a?text=No+Image',
+                        w300: posterPath ? `${posterUrlBase}w300/${posterPath}` : 'https://placehold.co/300x450/e0e0e0/4a4a4a?text=No+Image',
+                        w500: posterPath ? `${posterUrlBase}w500/${posterPath}` : 'https://placehold.co/500x750/e0e0e0/4a4a4a?text=No+Image',
+                        w780: posterPath ? `${posterUrlBase}w780/${posterPath}` : 'https://placehold.co/780x1170/e0e0e0/4a4a4a?text=No+Image'
+                    };
+
+                    const card = document.createElement('div');
+                    card.className = 'bg-gray-800 rounded-lg shadow-md overflow-hidden transform hover:scale-105 transition-transform duration-300 cursor-pointer';
+                    card.innerHTML = `
+                        <img
+                            src="${posterSizes.w500}"
+                            alt="Poster for ${title}"
+                            srcset="${posterSizes.w200} 200w, ${posterSizes.w300} 300w, ${posterSizes.w500} 500w, ${posterSizes.w780} 780w"
+                            sizes="(max-width: 640px) 50vw, (max-width: 768px) 33vw, (max-width: 1024px) 25vw, 20vw"
+                            loading="lazy"
+                            class="w-full h-auto object-cover"
+                        >
+                        <div class="p-4">
+                            <h4 class="text-xl font-bold text-white truncate">${title}</h4>
+                            <p class="text-sm text-gray-400 mt-1">Rating: ${item.vote_average ? item.vote_average.toFixed(1) : 'N/A'}</p>
+                        </div>
+                    `;
+
+                    // Update the click handler to use History API with slugified title
+                    card.addEventListener('click', () => {
+                        const newUrl = `/details/${mediaType}/${item.id}/${slugify(title)}`;
+                        history.pushState({ view: 'details', type: mediaType, id: item.id, title: title }, '', newUrl);
+                        updateState({ currentView: 'details', detailsParams: { type: mediaType, id: item.id, title: title } });
+                    });
+
+                    fragment.appendChild(card); // Tambahkan ke fragment
+                });
+                container.appendChild(fragment); // Tambahkan fragment ke DOM sekali saja
+            };
+
+            // Menggunakan DocumentFragment untuk renderSimpleCards
+            const renderSimpleCards = (items, container, limit = null) => {
+                const itemsToRender = limit ? items.slice(0, limit) : items;
+                container.innerHTML = ''; // Clear previous content
+                const fragment = document.createDocumentFragment(); // Buat fragment
+
+                itemsToRender.forEach(item => {
+                    const mediaType = item.media_type || (item.title ? 'movie' : 'tv');
+                    const title = item.title || item.name;
+                    const posterPath = item.poster_path;
+                    // Tentukan URL poster untuk berbagai ukuran
+                    const posterUrlBase = posterPath ? `https://image.tmdb.org/t/p/` : 'https://placehold.co/';
+                    const posterSizes = {
+                        w92: posterPath ? `${posterUrlBase}w92/${posterPath}` : 'https://placehold.co/92x138/e0e0e0/4a4a4a?text=No+Image',
+                        w185: posterPath ? `${posterUrlBase}w185/${posterPath}` : 'https://placehold.co/185x278/e0e0e0/4a4a4a?text=No+Image',
+                        w300: posterPath ? `${posterUrlBase}w300/${posterPath}` : 'https://placehold.co/300x450/e0e0e0/4a4a4a?text=No+Image'
+                    };
+
+                    const card = document.createElement('div');
+                    // Removed fixed width and flex-shrink-0 for grid layout
+                    card.className = 'bg-gray-800 rounded-lg shadow-md overflow-hidden transform hover:scale-105 transition-transform duration-300 cursor-pointer';
+                    card.innerHTML = `
+                        <img
+                            src="${posterSizes.w185}"
+                            alt="Poster for ${title}"
+                            srcset="${posterSizes.w92} 92w, ${posterSizes.w185} 185w, ${posterSizes.w300} 300w"
+                            sizes="(max-width: 640px) 33vw, (max-width: 768px) 25vw, (max-width: 1024px) 16vw, 10vw"
+                            loading="lazy"
+                            class="w-full h-auto object-cover"
+                        >
+                        <div class="p-2">
+                            <h4 class="text-sm font-bold text-white truncate">${title}</h4>
+                        </div>
+                    `;
+                    card.addEventListener('click', () => {
+                        const newUrl = `/details/${mediaType}/${item.id}/${slugify(title)}`;
+                        history.pushState({ view: 'details', type: mediaType, id: item.id, title: title }, '', newUrl);
+                        // Ketika mengklik film serupa di tampilan streaming, kembali ke detail dan kemudian muat film itu
+                        // Ini akan memicu handlePopState dan kemudian showDetails untuk film baru
+                        streamingPlayerInline.src = ''; // Hentikan video saat ini
+                        updateState({ currentView: 'details', detailsParams: { type: mediaType, id: item.id, title: title } });
+                    });
+                    fragment.appendChild(card); // Tambahkan ke fragment
+                });
+                container.appendChild(fragment); // Tambahkan fragment ke DOM sekali saja
+            };
+
+            const showDynamicContent = async (fetchType, type, id, title) => {
+                contentArea.innerHTML = ''; // Clear content area before populating
+                mainHeading.innerHTML = `<h2 class="text-3xl md:text-4xl font-extrabold text-white mb-6">${title}</h2>`;
+                mainHeading.classList.remove('hidden'); // Pastikan judul terlihat
+                hideErrorMessage(); // Hide error message when new content is loaded
+
+                const loadingSpinner = document.createElement('div');
+                loadingSpinner.className = 'flex justify-center items-center h-64';
+                loadingSpinner.innerHTML = `<div class="loading-spinner"></div>`;
+                contentArea.appendChild(loadingSpinner);
+
+                const itemsContainer = document.createElement('div');
+                itemsContainer.className = 'grid grid-cols-2 sm:grid-cols-3 lg:grid-cols-4 gap-6';
+                
+                let items;
+                try {
+                    if (fetchType === 'category') {
+                        items = await fetchContent(type, id, state.currentPage);
+                    } else if (fetchType === 'genre') {
+                        items = await fetchByGenre(type, id, state.currentPage);
+                    }
+                } catch (error) {
+                    console.error('Error fetching dynamic content:', error);
+                    displayErrorMessage(error.message); // Menampilkan pesan error yang lebih spesifik
+                    items = [];
+                } finally {
+                    loadingSpinner.remove();
+                }
+
+                if (items && items.length > 0) {
+                    contentArea.appendChild(itemsContainer);
+                    renderCards(items, itemsContainer);
+
+                    const loadMoreButton = document.createElement('button');
+                    loadMoreButton.className = 'mt-8 mx-auto block bg-blue-600 hover:bg-blue-700 text-white font-bold py-3 px-8 rounded-full shadow-lg transition-transform duration-300 transform hover:scale-105 relative overflow-hidden'; // Added relative & overflow-hidden
+                    loadMoreButton.innerHTML = `
+                        <span id="load-more-text">Load More</span>
+                        <div id="load-more-progress" class="progress-bar-container hidden">
+                            <div class="progress-bar" style="width: 0%;"></div>
+                        </div>
+                    `;
+                    
+                    loadMoreButton.addEventListener('click', async () => {
+                        const buttonText = loadMoreButton.querySelector('#load-more-text');
+                        const progressBarContainer = loadMoreButton.querySelector('#load-more-progress');
+                        const progressBar = progressBarContainer.querySelector('.progress-bar');
+
+                        loadMoreButton.disabled = true; // Disable button while loading
+                        buttonText.classList.add('hidden');
+                        progressBarContainer.classList.remove('hidden');
+                        progressBar.style.width = '0%'; // Reset progress bar
+
+                        // Simulate progress (optional, remove if not needed)
+                        let currentProgress = 0;
+                        const progressInterval = setInterval(() => {
+                            currentProgress += 10;
+                            if (currentProgress <= 90) { // Stop before 100% until actual data arrives
+                                progressBar.style.width = `${currentProgress}%`;
+                            } else {
+                                clearInterval(progressInterval);
+                            }
+                        }, 100);
+
+
+                        updateState({ currentPage: state.currentPage + 1 });
+                        let moreItems;
+                        try {
+                            if (fetchType === 'category') {
+                                moreItems = await fetchContent(type, id, state.currentPage);
+                            } else if (fetchType === 'genre') {
+                                moreItems = await fetchByGenre(type, id, state.currentPage);
+                            }
+                        } catch (error) {
+                            console.error('Error fetching more items:', error);
+                            displayErrorMessage(error.message); // Menampilkan pesan error yang lebih spesifik
+                            moreItems = [];
+                        } finally {
+                            clearInterval(progressInterval); // Clear simulation
+                            progressBar.style.width = '100%'; // Complete progress
+                            setTimeout(() => { // Give a small delay for animation to complete
+                                loadMoreButton.disabled = false; // Re-enable button
+                                buttonText.classList.remove('hidden');
+                                progressBarContainer.classList.add('hidden');
+                                if (!moreItems || moreItems.length === 0) {
+                                    buttonText.textContent = 'No More Items';
+                                    loadMoreButton.disabled = true;
+                                } else {
+                                    buttonText.textContent = 'Load More';
+                                }
+                            }, 300); // Wait for progress bar animation
+                        }
+
+                        if (moreItems && moreItems.length > 0) {
+                            renderCards(moreItems, itemsContainer);
+                        } else {
+                            // Handled in finally block now
+                        }
+                    });
+                    contentArea.appendChild(loadMoreButton);
+                } else if (!errorMessageContainer.classList.contains('hidden')) {
+                    // If an error message is already displayed, don't overwrite it with "No content found"
+                    // unless it's genuinely no content and not an error.
+                    // For now, if there's an error, the error message takes precedence.
+                } else {
+                    contentArea.innerHTML = '<p class="text-center text-gray-500">Tidak ada konten yang ditemukan untuk kategori/genre ini.</p>';
+                }
+            };
+
+            const showSearchResults = async (query) => {
+                contentArea.innerHTML = ''; // Clear content area before populating
+                mainHeading.innerHTML = `<h2 class="text-3xl md:text-4xl font-extrabold text-white mb-6">Search Results for: "${query}"</h2>`; // Display original query
+                mainHeading.classList.remove('hidden'); // Pastikan judul terlihat
+                hideErrorMessage(); // Hide error message when new content is loaded
+
+                const loadingSpinner = document.createElement('div');
+                loadingSpinner.className = 'flex justify-center items-center h-64';
+                loadingSpinner.innerHTML = `<div class="loading-spinner"></div>`;
+                contentArea.appendChild(loadingSpinner);
+
+                let searchResults;
+                try {
+                    // API call still uses encodeURIComponent for the actual query
+                    searchResults = await fetchSearchResults(query);
+                } catch (error) {
+                    console.error('Error fetching search results:', error);
+                    displayErrorMessage(error.message); // Menampilkan pesan error yang lebih spesifik
+                    searchResults = [];
+                } finally {
+                    loadingSpinner.remove();
+                }
+
+                if (searchResults && searchResults.length > 0) {
+                    const itemsContainer = document.createElement('div');
+                    itemsContainer.className = 'grid grid-cols-2 sm:grid-cols-3 lg:grid-cols-4 gap-6';
+                    contentArea.appendChild(itemsContainer);
+                    renderCards(searchResults, itemsContainer);
+                } else if (!errorMessageContainer.classList.contains('hidden')) {
+                    // Similar logic as above for search results
+                } else {
+                    contentArea.innerHTML = '<p class="text-center text-gray-500">Tidak ada hasil yang ditemukan untuk pencarian Anda.</p>';
+                }
+            };
+
+            const showDetails = async (type, id, titleFromHash) => {
+                contentArea.innerHTML = ''; // Clear content area before populating
+                hideErrorMessage(); // Hide error message when new content is loaded
+
+                // #############################################
+                // SKELETON LOADER FOR DETAILS (NEW)
+                // #############################################
+                const detailSkeleton = document.createElement('div');
+                detailSkeleton.id = 'detail-page-skeleton';
+                detailSkeleton.className = 'grid grid-cols-1 md:grid-cols-3 gap-8 md:gap-12 animate-pulse';
+                detailSkeleton.setAttribute('aria-busy', 'true'); // ARIA attribute for loading state
+                detailSkeleton.innerHTML = `
+                    <div class="md:col-span-1 bg-gray-800 rounded-lg shadow-lg w-full h-[450px] skeleton-box"></div>
+                    <div class="md:col-span-2 space-y-4">
+                        <div class="h-10 bg-gray-800 rounded w-3/4 skeleton-box"></div>
+                        <div class="h-6 bg-gray-800 rounded w-1/2 skeleton-box"></div>
+
+                        <div class="h-8 bg-gray-800 rounded w-full mt-8 mb-4 skeleton-box"></div>
+                        <div class="space-y-3">
+                            <div class="h-6 bg-gray-800 rounded w-2/3 skeleton-box"></div>
+                            <div class="h-6 bg-gray-800 rounded w-2/3 skeleton-box"></div>
+                            <div class="h-6 bg-gray-800 rounded w-full skeleton-box"></div>
+                            <div class="h-6 bg-gray-800 rounded w-1/2 skeleton-box"></div>
+                            <div class="h-6 bg-gray-800 rounded w-full skeleton-box"></div>
+                            <div class="h-6 bg-gray-800 rounded w-1/3 skeleton-box"></div>
+                            <div class="h-6 bg-gray-800 rounded w-2/3 skeleton-box"></div>
+                        </div>
+                    </div>
+                    <div class="md:col-span-3 mt-8 space-y-2">
+                        <div class="h-8 bg-gray-800 rounded w-1/4 mb-4 skeleton-box"></div>
+                        <div class="h-4 bg-gray-800 rounded w-full skeleton-box"></div>
+                        <div class="h-4 bg-gray-800 rounded w-full skeleton-box"></div>
+                        <div class="h-4 bg-gray-800 rounded w-5/6 skeleton-box"></div>
+                    </div>
+                    <div class="md:col-span-3 mt-12 text-center">
+                        <div class="h-8 bg-gray-800 rounded w-1/3 mx-auto mb-4 skeleton-box"></div>
+                        <div class="relative w-full h-[300px] bg-gray-800 rounded-lg shadow-xl skeleton-box"></div>
+                    </div>
+                    <div class="md:col-span-3 mt-12 text-center">
+                        <div class="h-8 bg-gray-800 rounded w-1/4 mx-auto mb-6 skeleton-box"></div>
+                        <div class="grid grid-cols-2 sm:grid-cols-3 md:grid-cols-6 gap-4">
+                            <div class="bg-gray-800 rounded-lg shadow-md w-full h-[250px] skeleton-box"></div>
+                            <div class="bg-gray-800 rounded-lg shadow-md w-full h-[250px] skeleton-box"></div>
+                            <div class="bg-gray-800 rounded-lg shadow-md w-full h-[250px] skeleton-box"></div>
+                            <div class="bg-gray-800 rounded-lg shadow-md w-full h-[250px] skeleton-box"></div>
+                            <div class="bg-gray-800 rounded-lg shadow-md w-full h-[250px] skeleton-box"></div>
+                            <div class="bg-gray-800 rounded-lg shadow-md w-full h-[250px] skeleton-box"></div>
+                        </div>
+                    </div>
+                `;
+                contentArea.appendChild(detailSkeleton);
+
+                try {
+                    // Mengambil semua data yang diperlukan secara paralel
+                    const [details, videosData, creditsData, reviewsData, similarData] = await Promise.all([
+                        safeFetch(`/${type}/${id}`),
+                        safeFetch(`/${type}/${id}/videos`),
+                        safeFetch(`/${type}/${id}/credits`),
+                        safeFetch(`/${type}/${id}/reviews`),
+                        safeFetch(`/${type}/${id}/similar`)
+                    ]);
+
+                    // Remove skeleton loader after data is fetched
+                    detailSkeleton.remove();
+                    detailSkeleton.setAttribute('aria-busy', 'false'); // Set ARIA to false when loading is complete
+
+                    // Menyimpan ID, tipe, dan JUDUL media ke dalam state global
+                    state.currentMediaId = id;
+                    state.currentMediaType = type;
+                    state.currentMediaTitle = details.title || details.name; // Simpan judul di sini
+
+                    const backButton = document.createElement('button');
+                    backButton.className = 'bg-gray-700 hover:bg-gray-600 text-white font-bold py-2 px-4 rounded-full transition-colors duration-300 mb-6 flex items-center';
+                    // Menggunakan history.back() untuk tombol kembali
+                    backButton.innerHTML = `
+                        <svg xmlns="http://www.w3.org/2000/svg" class="h-5 w-5 mr-2" fill="none" viewBox="0 0 24 24" stroke="currentColor">
+                            <path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M10 19l-7-7m0 0l7-7m-7 7h18" />
+                        </svg>
+                        Back to Details
+                    `;
+                    backButton.addEventListener('click', () => history.back());
+                    contentArea.appendChild(backButton);
+
+                    const director = creditsData.crew.find(member => member.job === 'Director');
+                    const cast = creditsData.cast.slice(0, 5).map(actor => actor.name).join(', ');
+
+                    const posterPath = details.poster_path;
+                    // Tentukan URL poster untuk berbagai ukuran
+                    const detailPosterUrlBase = posterPath ? `https://image.tmdb.org/t/p/` : 'https://placehold.co/';
+                    const detailPosterSizes = {
+                        w300: posterPath ? `${detailPosterUrlBase}w300/${posterPath}` : 'https://placehold.co/300x450/e0e0e0/4a4a4a?text=No+Image',
+                        w500: posterPath ? `${detailPosterUrlBase}w500/${posterPath}` : 'https://placehold.co/500x750/e0e0e0/4a4a4a?text=No+Image',
+                        w780: posterPath ? `${detailPosterUrlBase}w780/${posterPath}` : 'https://placehold.co/780x1170/e0e0e0/4a4a4a?text=No+Image'
+                    };
+
+
+                    let genreLinks = '';
+                    if (details.genres && details.genres.length > 0) {
+                        genreLinks = details.genres.map(g =>
+                            `<span class="genre-link cursor-pointer text-blue-400 hover:text-blue-200 hover:underline" data-genre-id="${g.id}" data-genre-name="${g.name}">${g.name}</span>`
+                        ).join(', ');
+                    } else {
+                        genreLinks = 'N/A';
+                    }
+                    
+                    const trailer = videosData.results.find(video => video.type === 'Trailer' && video.site === 'YouTube');
+
+                    // Menyiapkan HTML untuk tampilan detail dengan struktur heading yang baru
+                    const detailContainer = document.createElement('div');
+                    detailContainer.className = 'grid grid-cols-1 md:grid-cols-3 gap-8 md:gap-12';
+                    detailContainer.innerHTML = `
+                        <div class="md:col-span-1">
+                            <img
+                                src="${detailPosterSizes.w500}"
+                                alt="Poster for ${details.title || details.name}"
+                                srcset="${detailPosterSizes.w300} 300w, ${detailPosterSizes.w500} 500w, ${detailPosterSizes.w780} 780w"
+                                sizes="(max-width: 768px) 100vw, 33vw"
+                                loading="lazy"
+                                class="rounded-lg shadow-lg w-full"
+                            >
+                        </div>
+                        <div class="md:col-span-2 space-y-4">
+                            <h1 class="text-4xl font-extrabold text-white">${details.title || details.name}</h1>
+                            ${details.tagline ? `<h2 class="text-xl italic text-gray-400 mb-4">"${details.tagline}"</h2>` : ''}
+
+                            <h2 class="text-2xl font-bold text-white mt-8 mb-4">Film Details</h2>
+                            <div class="text-lg text-gray-300 space-y-3">
+                                <p class="flex items-center">
+                                    <span class="mr-3 text-2xl">⭐</span>
+                                    <strong class="text-white">Rating: </strong>&nbsp;${details.vote_average ? details.vote_average.toFixed(1) : 'N/A'}/10 (${details.vote_count || 0} votes)
+                                </p>
+                                <p class="flex items-center">
+                                    <span class="mr-3 text-2xl">📅</span>
+                                    <strong class="text-white">Release Date: </strong>&nbsp;${details.release_date || details.first_air_date || 'N/A'}
+                                </p>
+                                <p class="flex items-center">
+                                    <span class="mr-3 text-2xl">🎭</span>
+                                    <strong class="text-white">Genres: </strong>&nbsp;${genreLinks}
+                                </p>
+                                ${director ? `
+                                <p class="flex items-center">
+                                    <span class="mr-3 text-2xl">🎬</span>
+                                    <strong class="text-white">Director: </strong>&nbsp;${director.name}
+                                </p>` : ''}
+                                ${cast ? `
+                                <p class="flex items-start">
+                                    <span class="mr-3 text-2xl">🎭</span>
+                                    <span>
+                                        <strong class="text-white">Actors:</strong><br>
+                                        ${cast}
+                                    </span>
+                                </p>` : ''}
+                                <p class="flex items-center">
+                                    <span class="mr-3 text-2xl">🌐</span>
+                                    <strong class="text-white">Original Language: </strong>&nbsp;${details.original_language ? details.original_language.toUpperCase() : 'N/A'}
+                                </p>
+                                ${details.homepage ? `
+                                <p class="flex items-center">
+                                    <span class="mr-3 text-2xl">🔗</span>
+                                    <strong class="text-white">Homepage: </strong>&nbsp;
+                                    <a href="${details.homepage}" target="_blank" class="text-blue-400 hover:text-blue-200 hover:underline ml-2">${details.homepage}</a>
+                                </p>` : ''}
+                            </div>
+                        </div>
+                    `;
+
+                    contentArea.appendChild(detailContainer);
+
+                    // Menambahkan bagian "Overview" sebagai h3 terpisah
+                    const overviewSection = document.createElement('div');
+                    overviewSection.className = 'mt-8';
+                    overviewSection.innerHTML = `
+                        <h3 class="text-2xl font-bold text-white mb-4">Overview</h3>
+                        <p class="text-lg text-gray-300 text-justify">${details.overview || 'No overview available.'}</p>
+                    `;
+                    contentArea.appendChild(overviewSection);
+
+
+                    // Elemen trailer mandiri, diletakkan di bawah detail film
+                    if (trailer) {
+                        const trailerContainer = document.createElement('div');
+                        trailerContainer.className = 'mt-12 mx-auto w-full md:w-4/5 lg:w-3/4';
+                        trailerContainer.innerHTML = `
+                            <h3 class="text-2xl font-bold text-white mb-4 text-center">Trailer</h3>
+                            <div class="relative w-full h-0 pb-[56.25%] rounded-lg overflow-hidden shadow-xl">
+                                <iframe class="absolute top-0 left-0 w-full h-full" src="https://www.youtube.com/embed/${trailer.key}" frameborder="0" allow="accelerometer; autoplay; clipboard-write; encrypted-media; gyroscope; picture-in-picture" allowfullscreen></iframe>
+                            </div>
+                        `;
+                        contentArea.appendChild(trailerContainer);
+                    }
+
+                    // Menambahkan bagian "Similar to this"
+                    if (similarData && similarData.results && similarData.results.length > 0) {
+                        const similarSection = document.createElement('div');
+                        similarSection.className = 'mt-12';
+                        similarSection.innerHTML = `
+                            <h3 class="text-2xl font-bold text-white mb-6 text-center">Similar to this</h3>
+                            <div id="similar-movies-container" class="grid grid-cols-2 sm:grid-cols-3 md:grid-cols-6 gap-4"></div>
+                        `;
+                        contentArea.appendChild(similarSection);
+                        const similarMoviesContainer = document.getElementById('similar-movies-container');
+                        // Render 6 film teratas yang serupa
+                        renderCards(similarData.results.slice(0, 6), similarMoviesContainer);
+                    }
+
+
+                    // Menambahkan bagian "User Review"
+                    if (reviewsData && reviewsData.results && reviewsData.results.length > 0) {
+                        const reviewsSection = document.createElement('div');
+                        reviewsSection.className = 'mt-12';
+                        reviewsSection.innerHTML = `
+                            <h3 class="text-2xl font-bold text-white mb-6 text-center">User Reviews</h3>
+                            <div id="reviews-container" class="space-y-6"></div>
+                        `;
+                        contentArea.appendChild(reviewsSection);
+                        const reviewsContainer = document.getElementById('reviews-container');
+
+                        // Render 5 ulasan teratas
+                        reviewsData.results.slice(0, 5).forEach(review => {
+                            const reviewCard = document.createElement('div');
+                            reviewCard.className = 'bg-gray-800 rounded-lg shadow-lg p-6';
+                            reviewCard.innerHTML = `
+                                <div class="flex items-center mb-4">
+                                    <div class="h-12 w-12 rounded-full bg-blue-600 flex items-center justify-center text-white text-xl font-bold mr-4">
+                                        ${review.author.charAt(0).toUpperCase()}
+                                    </div>
+                                    <div>
+                                        <p class="font-bold text-white">${review.author}</p>
+                                        <p class="text-sm text-gray-400">Reviewed on: ${new Date(review.created_at).toLocaleDateString()}</p>
+                                    </div>
+                                </div>
+                                <p class="text-gray-300 text-justify line-clamp-4">${review.content}</p>
+                                <button class="read-more-btn text-blue-400 hover:underline mt-2">Read More</button>
+                            `;
+                            reviewsContainer.appendChild(reviewCard);
+                        });
+
+                        // Add event listeners for "Read More" buttons
+                        document.querySelectorAll('.read-more-btn').forEach(button => {
+                            button.addEventListener('click', (e) => {
+                                const reviewContent = e.target.parentNode.querySelector('p.text-gray-300');
+                                reviewContent.classList.toggle('line-clamp-4');
+                                e.target.textContent = reviewContent.classList.contains('line-clamp-4') ? 'Read More' : 'Show Less';
+                            });
+                        });
+
+                    } else {
+                        const noReviews = document.createElement('p');
+                        noReviews.className = 'mt-12 text-center text-gray-500';
+                        noReviews.textContent = 'Tidak ada ulasan pengguna yang tersedia.';
+                        contentArea.appendChild(noReviews);
+                    }
+
+                    // Menambahkan tombol "Stream Now" di bawah ulasan
+                    const streamingNowButtonContainer = document.createElement('div'); // Mengubah menjadi div untuk menampung tombol
+                    streamingNowButtonContainer.className = 'mt-8 flex justify-center';
+                    streamingNowButtonContainer.innerHTML = `
+                        <button id="trigger-streaming-view-button" class="bg-green-600 hover:bg-green-700 text-white font-bold py-3 px-8 rounded-full transition-colors duration-300 shadow-lg transform hover:scale-105">
+                            Stream Now
+                        </button>
+                    `;
+                    contentArea.appendChild(streamingNowButtonContainer);
+
+                    // Add event listener for the "Stream Now" button
+                    const triggerStreamingViewButton = document.getElementById('trigger-streaming-view-button');
+                    if (triggerStreamingViewButton) {
+                        triggerStreamingViewButton.addEventListener('click', () => {
+                            // Update the state to switch to the streaming view
+                            // The currentMediaId, currentMediaType, and currentMediaTitle are already set in showDetails
+                            updateState({ currentView: 'streaming' });
+                        });
+                    }
+
+
+                    // Menambahkan event listener untuk link genre
+                    document.querySelectorAll('.genre-link').forEach(link => {
+                        link.addEventListener('click', (e) => {
+                            e.preventDefault();
+                            const genreId = e.target.dataset.genreId;
+                            const genreName = e.target.dataset.genreName;
+                            // Memperbarui URL menggunakan History API dengan slugified genre name
+                            const newUrl = `/content/${type}/genre/${genreId}/${slugify(genreName)}`;
+                            history.pushState({ view: 'list', fetchType: 'genre', type: type, id: genreId, title: genreName }, '', newUrl);
+                            updateState({ currentView: 'list', listParams: { fetchType: 'genre', type: type, id: genreId, title: genreName } });
+                        });
+                    });
+
+                    // Memuat film-film serupa (genre romantis) di dalam bagian inline
+                    // Menggunakan genre yang relevan dengan film yang sedang ditonton, atau fallback ke romantis jika tidak ada
+                    const romanceGenreId = 10749; // ID untuk genre Romance
+                    const similarInlineMovies = await fetchByGenre(type, romanceGenreId, 1); // Selalu ambil Romance
+                    if (similarInlineMovies && similarInlineMovies.length > 0) {
+                        renderSimpleCards(similarInlineMovies.slice(0, 12), inlineSimilarContainer);
+                    } else {
+                        inlineSimilarContainer.innerHTML = '<p class="text-center text-gray-500 col-span-full">Tidak ada konten serupa yang ditemukan.</p>';
+                    }
+
+                    // Hide placeholder when iframe loads (or fails to load)
+                    streamingPlayerInline.onload = () => {
+                        playerPlaceholder.classList.add('hidden');
+                    };
+                    streamingPlayerInline.onerror = () => {
+                        playerPlaceholder.classList.add('hidden');
+                        // Optionally display an error message in the placeholder area
+                        playerPlaceholder.textContent = 'Failed to load player. Please try another stream.';
+                        playerPlaceholder.classList.remove('hidden');
+                    };
+
+
+                } catch (error) {
+                    console.error('Failed to fetch details:', error);
+                    detailSkeleton.remove(); // Pastikan skeleton dihapus jika ada error
+                    detailSkeleton.setAttribute('aria-busy', 'false'); // Set ARIA to false even on error
+                    displayErrorMessage(error.message); // Menampilkan pesan error yang lebih spesifik
+                    // Optionally, you might want to hide other content elements here
+                    // contentArea.innerHTML = ''; // Clear content area if an error occurs
+                }
+            };
+            
+            // Mengubah handleUrlHash menjadi handlePopState
+            const handlePopState = (event) => {
+                const path = window.location.pathname;
+                const stateFromHistory = event.state;
+
+                if (stateFromHistory) {
+                    // Jika ada state (dari pushState atau popstate)
+                    updateState({
+                        currentView: stateFromHistory.view,
+                        listParams: stateFromHistory.view === 'list' ? { fetchType: stateFromHistory.fetchType, type: stateFromHistory.type, id: stateFromHistory.id, title: stateFromHistory.title } : null,
+                        detailsParams: stateFromHistory.view === 'details' ? { type: stateFromHistory.type, id: stateFromHistory.id, title: stateFromHistory.title } : null,
+                        searchQuery: stateFromHistory.view === 'search' ? stateFromHistory.query : null,
+                        currentPage: 1 // Reset currentPage saat navigasi baru
+                    });
+                } else {
+                    // Jika tidak ada state (misalnya, saat memuat halaman pertama kali atau refresh)
+                    // Kita perlu menguraikan path secara manual
+                    const parts = path.split('/').filter(p => p); // Filter untuk menghapus string kosong
+                    let currentView = 'home';
+                    let listParams = null;
+                    let detailsParams = null;
+                    let searchQuery = null;
+
+                    if (parts.length === 0 || path === '/') {
+                        currentView = 'home';
+                    } else if (parts[0] === 'content' && parts.length > 3) {
+                        const [_, type, fetchType, id, titleSlug] = parts;
+                        // Konversi slug kembali ke spasi untuk tampilan/penggunaan internal
+                        const titleDecoded = decodeURIComponent(titleSlug).replace(/-/g, ' ');
+                        currentView = 'list';
+                        listParams = { fetchType, type, id, title: titleDecoded }; // Gunakan titleDecoded di sini
+                    } else if (parts[0] === 'details' && parts.length > 3) {
+                        const [_, type, id, titleSlug] = parts;
+                        const titleDecoded = decodeURIComponent(titleSlug).replace(/-/g, ' ');
+                        currentView = 'details';
+                        detailsParams = { type, id, title: titleDecoded }; // Gunakan titleDecoded di sini
+                    } else if (parts[0] === 'search' && parts.length > 1) {
+                        const [_, querySlug] = parts;
+                        const queryDecoded = decodeURIComponent(querySlug).replace(/-/g, ' ');
+                        currentView = 'search';
+                        searchQuery = queryDecoded; // Gunakan queryDecoded di sini
+                    } else {
+                        // Fallback jika URL tidak cocok dengan pola yang diharapkan
+                        currentView = 'home';
+                    }
+                    updateState({ currentView, listParams, detailsParams, searchQuery, currentPage: 1 });
+                }
+            };
+
+            // #############################################
+            // DEBOUNCE UTILITY FUNCTION (NEW)
+            // #############################################
+            const debounce = (func, delay) => {
+                let timeout;
+                return function(...args) {
+                    const context = this;
+                    clearTimeout(timeout);
+                    timeout = setTimeout(() => func.apply(context, args), delay);
+                };
+            };
+
+            // #############################################
+            // DEBOUNCED SEARCH FUNCTION (NEW)
+            // #############################################
+            const debouncedSearch = debounce((query) => {
+                if (query.trim()) { // Hanya cari jika query tidak kosong
+                    const newUrl = `/search/${slugify(query.trim())}`; // Gunakan slugify untuk URL
+                    history.pushState({ view: 'search', query: query.trim() }, '', newUrl); // Simpan query asli di state
+                    updateState({
+                        currentView: 'search',
+                        searchQuery: query.trim(), // Gunakan query asli untuk state
+                        listParams: null,
+                        detailsParams: null
+                    });
+                } else {
+                    // Jika query kosong, kembali ke tampilan beranda
+                    history.pushState({ view: 'home' }, '', '/');
+                    updateState({ currentView: 'home', listParams: null, detailsParams: null, searchQuery: null });
+                }
+            }, 500); // 500ms debounce delay
+
+            // Event Listeners
+            // Modifikasi event listener untuk searchInput agar menggunakan debouncing
+            searchInput.addEventListener('keyup', (e) => {
+                debouncedSearch(e.target.value);
+            });
+
+            // Event listener untuk submit form pencarian (jika pengguna menekan Enter atau klik tombol search)
+            searchForm.addEventListener('submit', (e) => {
+                e.preventDefault();
+                const query = searchInput.value.trim();
+                if (query) {
+                    // Langsung lakukan pencarian saat submit, membatalkan debounce yang tertunda
+                    const newUrl = `/search/${slugify(query)}`; // Gunakan slugify untuk URL
+                    history.pushState({ view: 'search', query: query }, '', newUrl); // Simpan query asli di state
+                    updateState({
+                        currentView: 'search',
+                        searchQuery: query, // Gunakan query asli untuk state
+                        listParams: null,
+                        detailsParams: null
+                    });
+                    searchInput.value = ''; // Kosongkan input setelah submit
+                } else {
+                    // Jika submit dengan query kosong, kembali ke home
+                    history.pushState({ view: 'home' }, '', '/');
+                    updateState({ currentView: 'home', listParams: null, detailsParams: null, searchQuery: null });
+                }
+            });
+
+            // Dropdown menu handling
+            const closeDropdowns = () => {
+                moviesDropdownMenu.classList.remove('opacity-100', 'visible');
+                moviesDropdownMenu.classList.add('opacity-0', 'invisible');
+                moviesDropdownButton.setAttribute('aria-expanded', 'false'); // ARIA
+                tvShowsDropdownMenu.classList.remove('opacity-100', 'visible');
+                tvShowsDropdownMenu.classList.add('opacity-0', 'invisible');
+                tvShowsDropdownButton.setAttribute('aria-expanded', 'false'); // ARIA
+            };
+
+            moviesDropdownButton.addEventListener('click', (e) => {
+                e.stopPropagation(); // Mencegah klik dokumen agar tidak langsung menutup
+                const isExpanded = moviesDropdownButton.getAttribute('aria-expanded') === 'true'; // ARIA
+                closeDropdowns(); // Tutup dropdown lain
+                moviesDropdownMenu.classList.toggle('opacity-0');
+                moviesDropdownMenu.classList.toggle('invisible');
+                moviesDropdownMenu.classList.toggle('opacity-100');
+                moviesDropdownMenu.classList.toggle('visible');
+                moviesDropdownButton.setAttribute('aria-expanded', !isExpanded); // ARIA
+            });
+
+            tvShowsDropdownButton.addEventListener('click', (e) => {
+                e.stopPropagation(); // Mencegah klik dokumen agar tidak langsung menutup
+                const isExpanded = tvShowsDropdownButton.getAttribute('aria-expanded') === 'true'; // ARIA
+                closeDropdowns(); // Tutup dropdown lain
+                tvShowsDropdownMenu.classList.toggle('opacity-0');
+                tvShowsDropdownMenu.classList.toggle('invisible');
+                tvShowsDropdownMenu.classList.toggle('opacity-100');
+                tvShowsDropdownMenu.classList.toggle('visible');
+                tvShowsDropdownButton.setAttribute('aria-expanded', !isExpanded); // ARIA
+            });
+
+            // Menggunakan delegasi event untuk klik pada item dropdown
+            document.getElementById('movies-dropdown-menu').addEventListener('click', (e) => {
+                const button = e.target.closest('button[role="menuitem"]');
+                if (button) {
+                    const type = button.dataset.type;
+                    const category = button.dataset.category;
+                    const title = `${button.textContent} Movies`;
+                    const newUrl = `/content/${type}/category/${category}/${slugify(title)}`; // Gunakan slugify untuk URL
+                    history.pushState({ view: 'list', fetchType: 'category', type: type, id: category, title: title }, '', newUrl);
+                    updateState({ currentView: 'list', listParams: { fetchType: 'category', type: type, id: category, title: title } });
+                    closeDropdowns(); // Tutup dropdown setelah pemilihan
+                }
+            });
+
+            document.getElementById('tv-shows-dropdown-menu').addEventListener('click', (e) => {
+                const button = e.target.closest('button[role="menuitem"]');
+                if (button) {
+                    const type = button.dataset.type;
+                    const category = button.dataset.category;
+                    const title = `${button.textContent} Tv Shows`;
+                    const newUrl = `/content/${type}/category/${category}/${slugify(title)}`; // Gunakan slugify untuk URL
+                    history.pushState({ view: 'list', fetchType: 'category', type: type, id: category, title: title }, '', newUrl);
+                    updateState({ currentView: 'list', listParams: { fetchType: 'category', type: type, id: category, title: title } });
+                    closeDropdowns(); // Tutup dropdown setelah pemilihan
+                }
+            });
+            
+            // Initial load based on path
+            // Menggunakan replaceState untuk URL awal agar tidak ada entri duplikat di riwayat
+            if (window.location.pathname === '/' && !window.location.hash) {
+                history.replaceState({ view: 'home' }, '', '/');
+                updateState({ currentView: 'home' });
+            } else {
+                handlePopState({ state: history.state }); // Memicu render berdasarkan URL saat ini
+            }
+            
+            // Mengubah event listener dari 'hashchange' menjadi 'popstate'
+            window.addEventListener('popstate', handlePopState);
+
+            homeLink.addEventListener('click', (e) => {
+                e.preventDefault(); // Mencegah perilaku default link
+                history.pushState({ view: 'home' }, '', '/');
+                updateState({ currentView: 'home' });
+            });
+
+            // Event listener untuk tombol stream inline (sekarang di dalam streaming-page-view)
+            stream1InlineButton.addEventListener('click', () => {
+                if (state.currentMediaId) {
+                    streamingPlayerInline.src = `https://vidsrc.me/embed/${state.currentMediaId}`;
+                    playerPlaceholder.classList.remove('hidden'); // Tampilkan placeholder saat stream dimulai
+                }
+            });
+
+            stream2InlineButton.addEventListener('click', () => {
+                if (state.currentMediaId && state.currentMediaType) {
+                    streamingPlayerInline.src = `https://vidsrc.to/embed/${state.currentMediaType}/${state.currentMediaId}`;
+                    playerPlaceholder.classList.remove('hidden'); // Tampilkan placeholder saat stream dimulai
+                }
+            });
+
+            // Tombol kembali untuk tampilan streaming
+            streamingBackButton.addEventListener('click', () => {
+                streamingPlayerInline.src = ''; // Hentikan video saat kembali
+                playerPlaceholder.classList.add('hidden'); // Sembunyikan placeholder saat kembali
+                // Gunakan history.back() untuk kembali ke halaman detail yang relevan
+                history.back();
+            });
+        });
+    </script>
+</body>
+</html>
